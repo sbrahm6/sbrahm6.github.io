@@ -9,6 +9,26 @@
   <title>File Tree Using JavaScript</title>
   <link rel="stylesheet" type="text/css" href="file-tree.css" />
 
+  <script>
+    (function () {
+      var cors_api_host = 'dry-everglades-33781.herokuapp.com';
+      // var cors_api_host = 'localhost:8080';
+      var cors_api_url = 'https://' + cors_api_host + '/';
+      var slice = [].slice;
+      var origin = window.location.protocol + '//' + window.location.host;
+      var open = XMLHttpRequest.prototype.open;
+      XMLHttpRequest.prototype.open = function () {
+        var args = slice.call(arguments);
+        var targetOrigin = /^https?:\/\/([^\/]+)/i.exec(args[1]);
+        if (targetOrigin && targetOrigin[0].toLowerCase() !== origin &&
+          targetOrigin[1] !== cors_api_host) {
+          args[1] = cors_api_url + args[1];
+        }
+        return open.apply(this, args);
+      };
+    })();
+  </script>
+
   <style>
     .tmp {
       display: none;
@@ -29,60 +49,102 @@
     <li class="tmp">
       <span class="folder-name">template</span>
       <ul class="fileList">
-        <li class=listItem><span class="span"><a class="link" href=""></a></span></li>
+        <li class=listItem><span><a class="link" href=""></a></span></li>
       </ul>
     </li>
 
+    <li>
+      <span class="folder-name">Projects</span>
+      <ul class="projects">
+        <!-- <li>
+            <span class="folder-name">sub-folder</span>
+            <ul>
+              <li><span>file</span></li>
+            </ul>
+          </li> -->
+      </ul>
+    </li>
+
+    <!-- <li>
+      <span class="folder-name">Activities</span>
+      <ul class="activities">
+
+      </ul>
+    </li> -->
   </ul>
 
   <script>
     const tree = document.querySelector("#file-tree");
-    const projects = ["IT202-Spring2021-project1", "IT202-Spring2021-project2"];
+    const projects = document.querySelector(".projects");
+    // const projects = ["IT202-Spring2021-project1", "IT202-Spring2021-project2"];
     const api = "https://api.github.com/repos/sbrahm6/";
     const gp = "https://sbrahm6.github.io/";
 
+    // Proxy employed in order to bypass CORS(Cross Origin Requests) errors for local testing. 
+    // Required more reserarch into how network processes, calls, headers and requests are handled.
+    const proxyURL = "https://dry-everglades-33781.herokuapp.com/"
+    const localProxy = "http://localhost:8080/";
+
     const tmp = document.querySelector(".tmp");
 
+    const reposParentURL = fetch(proxyURL + "https://api.github.com/users/sbrahm6/repos")
+      .then(res => res.json()).then((data) => {
+        const length = data.length;
 
-    for (let proj of projects) {
+        // const repos = Array.from(data, (item) => item.name);
+        // const repoURL = Array.from(data, (item) => item.html_url);
+        // const apiURL = Array.from(data, (item) => item.url);
 
-      const clone = tmp.cloneNode(true);
-      clone.classList.add("project");
-      const ul = clone.querySelector(".fileList");
-      const link = clone.querySelector(".link");
-      const li = clone.querySelector(".listItem").cloneNode(true);
+        for (let item of data) {
 
-      (async () => {
-        const response = await fetch(api + proj);
-        const data = await response.json();
+          let proj = item.name;
+          // console.log(proj);
 
-        const href = `${data.html_url}`;
-        const name = `${data.name}`;
-        clone.querySelector(".folder-name").innerText = name;
-        // link.before(name + " - ");
+          const clone = tmp.cloneNode(true);
+          const li = clone.querySelector(".listItem").cloneNode(true);
 
-
-        link.innerText = "Repository";
-        link.href = href;
-
-        li.querySelector(".link").href = gp + name;
-        // li.querySelector(".link").before(name + " - ");
-        li.querySelector(".link").innerText = "Deployment";
+          // clone.classList.add("project");
+          const ul = clone.querySelector(".fileList");
+          const link = clone.querySelector(".link");
 
 
-        // console.log(ul, li)
-      })();
+          (async () => {
+            const response = await fetch(proxyURL + api + proj);
+            const data = await response.json();
 
-      console.log(li);
-      ul.appendChild(li);
+            const href = `${data.html_url}`;
+            const name = `${data.name}`;
+            clone.querySelector(".folder-name").innerText = name;
+            // link.before(name + " - ");
 
-      // console.log(clone);
-      clone.classList.remove("tmp");
-      tree.appendChild(clone);
 
-    }
+            link.innerText = "Repository";
+            link.href = href;
+            // console.log(gp + name);
+
+            const deployment = await fetch(proxyURL + gp + name);
+
+
+            if (deployment.ok) {
+              // console.log(deployment.status);
+              li.querySelector(".link").href = gp + name;
+              // li.querySelector(".link").before(name + " - ");
+              li.querySelector(".link").innerText = "GithubPages Deployment";
+              ul.appendChild(li);
+            }
+          })();
+
+          // CODE BELOW SHOWS DIFF DUE TO ASYNC OPERATION
+          // let lineItem = li.cloneNode(true);
+          // console.log(Object.isSealed(lineItem),  Object.isSealed(li));
+          clone.classList.remove("tmp");
+          projects.appendChild(clone);
+
+        }
+
+      }).catch(err => console.log("CAUGHT ERROR", err));
+
   </script>
-
 
   <!-- import and initialize fileTree function -->
   <script src="file-tree.js"></script>
