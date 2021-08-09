@@ -99,6 +99,7 @@
         for (let item of data) {
 
           let proj = item.name;
+          if (!proj.match(/202/i)) { continue };
           // console.log(proj);
 
           const clone = tmp.cloneNode(true);
