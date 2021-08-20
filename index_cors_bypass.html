@@ -84,68 +84,75 @@
     // Proxy employed in order to bypass CORS(Cross Origin Requests) errors for local testing. 
     // Required more reserarch into how network processes, calls, headers and requests are handled.
     // const proxyURL = "";
-    const proxyURL = "";
+    const proxyURL = "https://dry-everglades-33781.herokuapp.com/";
     const localProxy = "http://localhost:8080/";
 
     const tmp = document.querySelector(".tmp");
 
-    const reposParentURL = fetch(proxyURL + "https://api.github.com/users/sbrahm6/repos")
-      .then(res => res.json()).then((data) => {
-        const length = data.length;
+    const reposParentURL = fetch("https://api.github.com/users/sbrahm6/repos").catch(() => {
+      fetch(proxyURL + "https://api.github.com/users/sbrahm6/repos")
+    }).then(res => res.json()).then((data) => {
+      const length = data.length;
 
-        // const repos = Array.from(data, (item) => item.name);
-        // const repoURL = Array.from(data, (item) => item.html_url);
-        // const apiURL = Array.from(data, (item) => item.url);
+      // const repos = Array.from(data, (item) => item.name);
+      // const repoURL = Array.from(data, (item) => item.html_url);
+      // const apiURL = Array.from(data, (item) => item.url);
 
-        for (let item of data) {
+      for (let item of data) {
 
-          let proj = item.name;
-          if (!proj.match(/202/i)) { continue };
-          // console.log(proj);
+        let proj = item.name;
+        if (!proj.match(/202/i)) { continue };
+        // console.log(proj);
 
-          const clone = tmp.cloneNode(true);
-          const li = clone.querySelector(".listItem").cloneNode(true);
+        const clone = tmp.cloneNode(true);
+        const li = clone.querySelector(".listItem").cloneNode(true);
 
-          // clone.classList.add("project");
-          const ul = clone.querySelector(".fileList");
-          const link = clone.querySelector(".link");
-
-
-          (async () => {
-            const response = await fetch(proxyURL + api + proj);
-            const data = await response.json();
-
-            const href = `${data.html_url}`;
-            const name = `${data.name}`;
-            clone.querySelector(".folder-name").innerText = name;
-            // link.before(name + " - ");
+        // clone.classList.add("project");
+        const ul = clone.querySelector(".fileList");
+        const link = clone.querySelector(".link");
 
 
-            link.innerText = "Repository";
-            link.href = href;
-            // console.log(gp + name);
+        (async () => {
+          const response = await fetch(api + proj).catch(() => {
+            fetch(proxyURL + api + proj);
+            console.log(" 222 ");
+          });
+          const data = await response.json();
 
-            const deployment = await fetch(proxyURL + gp + name);
+          const href = `${data.html_url}`;
+          const name = `${data.name}`;
+          clone.querySelector(".folder-name").innerText = name;
+          // link.before(name + " - ");
 
 
-            if (deployment.ok) {
-              // console.log(deployment.status);
-              li.querySelector(".link").href = gp + name;
-              // li.querySelector(".link").before(name + " - ");
-              li.querySelector(".link").innerText = "GithubPages Deployment";
-              ul.appendChild(li);
-            }
-          })();
+          link.innerText = "Repository";
+          link.href = href;
+          // console.log(gp + name);
 
-          // CODE BELOW SHOWS DIFF DUE TO ASYNC OPERATION
-          // let lineItem = li.cloneNode(true);
-          // console.log(Object.isSealed(lineItem),  Object.isSealed(li));
-          clone.classList.remove("tmp");
-          projects.appendChild(clone);
+          const deployment = await fetch(gp + name).catch(() => {
+            fetch(proxyURL + gp + name);
+            console.log(" 333 ");
+          });
 
-        }
 
-      }).catch(err => console.log("CAUGHT ERROR", err));
+          if (deployment.ok) {
+            // console.log(deployment.status);
+            li.querySelector(".link").href = gp + name;
+            // li.querySelector(".link").before(name + " - ");
+            li.querySelector(".link").innerText = "GithubPages Deployment";
+            ul.appendChild(li);
+          }
+        })();
+
+        // CODE BELOW SHOWS DIFF DUE TO ASYNC OPERATION
+        // let lineItem = li.cloneNode(true);
+        // console.log(Object.isSealed(lineItem),  Object.isSealed(li));
+        clone.classList.remove("tmp");
+        projects.appendChild(clone);
+
+      }
+
+    }).catch(err => console.log("CAUGHT ERROR", err));
 
   </script>
 
