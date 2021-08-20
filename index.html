@@ -3,9 +3,9 @@
 
 <head>
   <meta charset="UTF-8" />
-  <meta http-equiv="Cache-Control" content="no-store" />
+  <!-- <meta http-equiv="Cache-Control" content="no-store" />
   <meta name="viewport" content="width=device-width,initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <meta name="theme-color" content="#000000" />
+  <meta name="theme-color" content="#000000" /> -->
   <meta name="description" content="Project File Tree" />
   <title>File Tree Using JavaScript</title>
   <link rel="stylesheet" type="text/css" href="file-tree.css" />
@@ -83,8 +83,8 @@
 
     // Proxy employed in order to bypass CORS(Cross Origin Requests) errors for local testing. 
     // Required more reserarch into how network processes, calls, headers and requests are handled.
-    // const proxyURL = "";
     const proxyURL = "";
+    // const proxyURL = "https://dry-everglades-33781.herokuapp.com/";
     const localProxy = "http://localhost:8080/";
 
     const tmp = document.querySelector(".tmp");
