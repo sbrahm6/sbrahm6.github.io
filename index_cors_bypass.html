@@ -133,10 +133,10 @@
                         // console.log(gp + name);
 
                         try {
-                            const deployment = await fetch(gp + name);
-                            console.log(deployment.ok, " TRY 3");
+                            console.log(deployment.ok, " TRY ");
+                            var deployment = await fetch(gp + name);
                         } catch (e) {
-                            deployment = await fetch(proxyURL + gp + name);
+                            var deployment = await fetch(proxyURL + gp + name);
                             // console.log(deployment.ok, " CATCH ");
                         } finally {
                             // console.log(deployment.ok, " FINALLY ");
