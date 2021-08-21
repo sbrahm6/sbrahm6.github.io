@@ -89,7 +89,7 @@
 
         const tmp = document.querySelector(".tmp");
 
-        const reposParentURL = fetch(proxyURL + "https://api.github.com/users/sbrahm6/repos")
+        const reposParentURL = fetch("https://api.github.com/users/sbrahm6/repos")
             // .catch(() => {
             //   fetch(proxyURL + "https://api.github.com/users/sbrahm6/repos")
             // })
@@ -115,7 +115,7 @@
 
 
                     (async () => {
-                        const response = await fetch(proxyURL + api + proj);
+                        const response = await fetch(api + proj);
                         //   .catch(() => {
                         //     fetch(proxyURL + api + proj);
                         //     console.log(" 222 ");
@@ -134,11 +134,12 @@
 
                         try {
                             const deployment = await fetch(gp + name);
+                            console.log(deployment.ok, " TRY 3");
                         } catch (e) {
                             deployment = await fetch(proxyURL + gp + name);
-                            console.log(deployment.ok, " CATCH ");
+                            // console.log(deployment.ok, " CATCH ");
                         } finally {
-                            console.log(deployment.ok, " FINALLY ");
+                            // console.log(deployment.ok, " FINALLY ");
                             if (deployment.ok) {
                                 // console.log(deployment.status);
                                 li.querySelector(".link").href = gp + name;
