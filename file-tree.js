@@ -9,11 +9,15 @@ function fileTree(elementId) {
   liElementsInideUl.has('ul').forEach(li => {
     li.classList.add('folder-root');
 //---------------------------------
-    // li.classList.add('closed');
+    li.classList.add('closed');
+    li.classList.add('open');
+
 //---------------------------------
     var spanFolderElementsInsideLi = li.querySelectorAll('span.folder-name');
     spanFolderElementsInsideLi.forEach(span => {
       if (span.parentNode.nodeName === 'LI') {
+        // console.log(projNum);
+
         span.onclick = function(e) {
           span.parentNode.classList.toggle('open');
         };

@@ -9,6 +9,8 @@
     <meta name="description" content="Project File Tree" />
     <title>File Tree Using JavaScript</title>
     <link rel="stylesheet" type="text/css" href="file-tree.css" />
+    <script src="file-tree.js"></script>
+
 
     <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
     <link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
@@ -17,6 +19,10 @@
     <style>
         .tmp {
             display: none;
+        }
+
+        body {
+            font-family: monospace;
         }
     </style>
 </head>
@@ -28,7 +34,7 @@
 
     <title>Project File Tree</title>
     <h1>Project Directory Tree </h1>
-    <h2><a id="login" href="https://github.com/sbrahm6">>>github.com/sbrahm6</a></h2>
+    <h2><a id="login" href="https://github.com/sbrahm6">**github.com/sbrahm6**</a></h2>
 
 
 
@@ -150,7 +156,9 @@
         </li>
 
         <li>
-            <span class="folder-name">Projects</span>
+            <span class="folder-name">
+                <h3>Projects</h3>
+            </span>
             <ul class="projects">
                 <!-- <li>
             <span class="folder-name">sub-folder</span>
@@ -172,6 +180,7 @@
     <script>
         const tree = document.querySelector("#file-tree");
         const projects = document.querySelector(".projects");
+        var projNum = 0;
         // const projects = ["IT202-Spring2021-project1", "IT202-Spring2021-project2"];
         const api = "https://api.github.com/repos/sbrahm6/";
         const gp = "https://sbrahm6.github.io/";
@@ -200,6 +209,7 @@
                     let proj = item.name;
                     if (!proj.match(/202/i)) { continue };
                     // console.log(proj);
+                    projNum++;
 
                     const clone = tmp.cloneNode(true);
                     const li = clone.querySelector(".listItem").cloneNode(true);
@@ -252,18 +262,12 @@
                     projects.appendChild(clone);
 
                 }
+                // **import and initialize fileTree function** 
+                fileTree('file-tree');
+                // console.log(projNum);
 
             }).catch(err => console.log("CAUGHT ERROR", err));
 
-    </script>
-
-    <!-- import and initialize fileTree function -->
-    <script src="file-tree.js"></script>
-    <script type="text/javascript">
-        window.onload = function () {
-            // passing element id to fileTree
-            fileTree('file-tree');
-        };
     </script>
 </body>
 
