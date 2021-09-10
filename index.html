@@ -3,36 +3,26 @@
 
 <head>
   <meta charset="UTF-8" />
-  <!-- <meta http-equiv="Cache-Control" content="no-store" />
+  <meta http-equiv="Cache-Control" content="no-store" />
   <meta name="viewport" content="width=device-width,initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <meta name="theme-color" content="#000000" /> -->
+  <meta name="theme-color" content="#000000" />
   <meta name="description" content="Project File Tree" />
   <title>File Tree Using JavaScript</title>
   <link rel="stylesheet" type="text/css" href="file-tree.css" />
+  <script src="file-tree.js"></script>
 
-  <!-- <script>
-    (function () {
-      var cors_api_host = 'dry-everglades-33781.herokuapp.com';
-      // var cors_api_host = 'localhost:8080';
-      var cors_api_url = 'https://' + cors_api_host + '/';
-      var slice = [].slice;
-      var origin = window.location.protocol + '//' + window.location.host;
-      var open = XMLHttpRequest.prototype.open;
-      XMLHttpRequest.prototype.open = function () {
-        var args = slice.call(arguments);
-        var targetOrigin = /^https?:\/\/([^\/]+)/i.exec(args[1]);
-        if (targetOrigin && targetOrigin[0].toLowerCase() !== origin &&
-          targetOrigin[1] !== cors_api_host) {
-          args[1] = cors_api_url + args[1];
-        }
-        return open.apply(this, args);
-      };
-    })();
-  </script> -->
+
+  <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+  <link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
   <style>
     .tmp {
       display: none;
+    }
+
+    body {
+      font-family: monospace;
     }
   </style>
 </head>
@@ -43,7 +33,117 @@
   </noscript>
 
   <title>Project File Tree</title>
-  <h1>Project File Tree</h1>
+  <h1>Project Directory Tree </h1>
+  <h2><a id="login" href="https://github.com/sbrahm6">**github.com/sbrahm6**</a></h2>
+
+
+
+
+
+  <!-- <div class="mdc-select mdc-select--filled demo-width-class">
+    <div class="mdc-select__anchor">
+        <span class="mdc-select__ripple"></span>
+        <span class="mdc-floating-label mdc-floating-label--float-above">Pick a Food Group</span>
+        <span class="mdc-select__selected-text-container">
+            <span class="mdc-select__selected-text">Vegetables</span>
+        </span>
+        <span class="mdc-select__dropdown-icon">
+            <svg class="mdc-select__dropdown-icon-graphic" viewBox="7 10 10 5" focusable="false">
+                <polygon class="mdc-select__dropdown-icon-inactive" stroke="none" fill-rule="evenodd"
+                    points="7 10 12 15 17 10">
+                </polygon>
+                <polygon class="mdc-select__dropdown-icon-active" stroke="none" fill-rule="evenodd"
+                    points="7 15 12 10 17 15">
+                </polygon>
+            </svg>
+        </span>
+        <span class="mdc-line-ripple"></span>
+    </div>
+
+    <div class="mdc-select__menu demo-width-class mdc-menu mdc-menu-surface">
+        <ul class="mdc-list">
+            <li class="mdc-list-item" data-value="">
+                <span class="mdc-list-item__ripple"></span>
+            </li>
+            <li class="mdc-list-item" data-value="grains">
+                <span class="mdc-list-item__ripple"></span>
+                <span class="mdc-list-item__text">Bread, Cereal, Rice, and Pasta</span>
+            </li>
+            <li class="mdc-list-item mdc-list-item--selected" data-value="vegetables" aria-selected="true">
+                <span class="mdc-list-item__ripple"></span>
+                <span class="mdc-list-item__text">Vegetables</span>
+            </li>
+            <li class="mdc-list-item" data-value="fruit">
+                <span class="mdc-list-item__ripple"></span>
+                <span class="mdc-list-item__text">Fruit</span>
+            </li>
+        </ul>
+    </div>
+</div> -->
+
+  <style>
+    .mdc-select--outlined {
+      min-width: 25em;
+    }
+  </style>
+
+
+  <div class="mdc-select mdc-select--outlined ">
+    <div class="mdc-select__anchor" aria-labelledby="outlined-select-label">
+      <span class="mdc-notched-outline">
+        <span class="mdc-notched-outline__leading"></span>
+        <span class="mdc-notched-outline__notch">
+          <span id="outlined-select-label" class="mdc-floating-label">Make a Selection</span>
+        </span>
+        <span class="mdc-notched-outline__trailing"></span>
+      </span>
+      <span class="mdc-select__selected-text-container">
+        <span id="demo-selected-text" class="mdc-select__selected-text">IT202 - Multimedia & Web Design</span>
+      </span>
+      <span class="mdc-select__dropdown-icon">
+        <svg class="mdc-select__dropdown-icon-graphic" viewBox="7 10 10 5" focusable="false">
+          <polygon class="mdc-select__dropdown-icon-inactive" stroke="none" fill-rule="evenodd"
+            points="7 10 12 15 17 10">
+          </polygon>
+          <polygon class="mdc-select__dropdown-icon-active" stroke="none" fill-rule="evenodd" points="7 15 12 10 17 15">
+          </polygon>
+        </svg>
+      </span>
+    </div>
+
+    <div class="mdc-select__menu mdc-menu mdc-menu-surface mdc-menu-surface--fullwidth">
+      <ul class="mdc-list" role="listbox" aria-label="Food picker listbox">
+        <li class="mdc-list-item" aria-selected="false" data-value="" role="option">
+          <span class="mdc-list-item__ripple"></span>
+        </li>
+        <li class="mdc-list-item mdc-list-item--selected" aria-selected="true" data-value="fruit" role="option">
+          <span class="mdc-list-item__ripple"></span>
+          <span class="mdc-list-item__text">
+            IT202 - Multimedia & Web Design
+          </span>
+        </li>
+        <!-- <li class="mdc-list-item" data-value="vegetables" aria-selected="true">
+                    <span class="mdc-list-item__ripple"></span>
+                    <span class="mdc-list-item__text">Vegetables</span>
+                </li>
+                <li class="mdc-list-item" data-value="grains">
+                    <span class="mdc-list-item__ripple"></span>
+                    <span class="mdc-list-item__text">Grains</span>
+                </li> -->
+
+      </ul>
+    </div>
+  </div>
+
+
+  <script>
+    const select = mdc.select.MDCSelect.attachTo(document.querySelector('.mdc-select'));
+
+        // select.listen('MDCSelect:change', () => {
+        //     alert(`Selected option at index ${select.selectedIndex} with value "${select.value}"`);
+        // });
+  </script>
+
 
   <ul id="file-tree" class="file-tree">
 
@@ -55,7 +155,9 @@
     </li>
 
     <li>
-      <span class="folder-name">Projects</span>
+      <span class="folder-name">
+        <h3>Projects</h3>
+      </span>
       <ul class="projects">
         <!-- <li>
             <span class="folder-name">sub-folder</span>
@@ -77,19 +179,24 @@
   <script>
     const tree = document.querySelector("#file-tree");
     const projects = document.querySelector(".projects");
+    var projNum = 0;
     // const projects = ["IT202-Spring2021-project1", "IT202-Spring2021-project2"];
     const api = "https://api.github.com/repos/sbrahm6/";
     const gp = "https://sbrahm6.github.io/";
 
     // Proxy employed in order to bypass CORS(Cross Origin Requests) errors for local testing. 
     // Required more reserarch into how network processes, calls, headers and requests are handled.
-    const proxyURL = "";
     // const proxyURL = "https://dry-everglades-33781.herokuapp.com/";
+    const proxyURL = "";
+
     const localProxy = "http://localhost:8080/";
 
     const tmp = document.querySelector(".tmp");
 
-    const reposParentURL = fetch(proxyURL + "https://api.github.com/users/sbrahm6/repos")
+    const reposParentURL = fetch("https://api.github.com/users/sbrahm6/repos")
+      // .catch(() => {
+      //   fetch(proxyURL + "https://api.github.com/users/sbrahm6/repos")
+      // })
       .then(res => res.json()).then((data) => {
         const length = data.length;
 
@@ -102,6 +209,7 @@
           let proj = item.name;
           if (!proj.match(/202/i)) { continue };
           // console.log(proj);
+          projNum++;
 
           const clone = tmp.cloneNode(true);
           const li = clone.querySelector(".listItem").cloneNode(true);
@@ -112,7 +220,11 @@
 
 
           (async () => {
-            const response = await fetch(proxyURL + api + proj);
+            const response = await fetch(api + proj);
+            //   .catch(() => {
+            //     fetch(proxyURL + api + proj);
+            //     console.log(" 222 ");
+            //   });
             const data = await response.json();
 
             const href = `${data.html_url}`;
@@ -125,37 +237,37 @@
             link.href = href;
             // console.log(gp + name);
 
-            const deployment = await fetch(proxyURL + gp + name);
-
-
-            if (deployment.ok) {
-              // console.log(deployment.status);
-              li.querySelector(".link").href = gp + name;
-              // li.querySelector(".link").before(name + " - ");
-              li.querySelector(".link").innerText = "GithubPages Deployment";
-              ul.appendChild(li);
+            try {
+              console.log(deployment.ok, " TRY ");
+              var deployment = await fetch(gp + name);
+            } catch (e) {
+              var deployment = await fetch(proxyURL + gp + name);
+              // console.log(deployment.ok, " CATCH ");
+            } finally {
+              // console.log(deployment.ok, " FINALLY ");
+              if (deployment.ok) {
+                // console.log(deployment.status);
+                li.querySelector(".link").href = gp + name;
+                // li.querySelector(".link").before(name + " - ");
+                li.querySelector(".link").innerText = "GithubPages Deployment";
+                ul.appendChild(li);
+              }
             }
           })();
 
-          // CODE BELOW SHOWS DIFF DUE TO ASYNC OPERATION
+          // CODE BELOW ADJUSTED DUE TO ASYNC OPERATION
           // let lineItem = li.cloneNode(true);
           // console.log(Object.isSealed(lineItem),  Object.isSealed(li));
           clone.classList.remove("tmp");
           projects.appendChild(clone);
 
         }
+        // **import and initialize fileTree function** 
+        fileTree('file-tree');
+        // console.log(projNum);
 
       }).catch(err => console.log("CAUGHT ERROR", err));
 
-  </script>
-
-  <!-- import and initialize fileTree function -->
-  <script src="file-tree.js"></script>
-  <script type="text/javascript">
-    window.onload = function () {
-      // passing element id to fileTree
-      fileTree('file-tree');
-    };
   </script>
 </body>
 
