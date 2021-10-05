@@ -123,10 +123,10 @@
           </span>
         </li>
         <li class="mdc-list-item" data-value="all" aria-selected="true">
-                    <span class="mdc-list-item__ripple"></span>
-                    <span class="mdc-list-item__text">ALL</span>
-                </li>
-                <!-- <li class="mdc-list-item" data-value="grains">
+          <span class="mdc-list-item__ripple"></span>
+          <span class="mdc-list-item__text">ALL</span>
+        </li>
+        <!-- <li class="mdc-list-item" data-value="grains">
                     <span class="mdc-list-item__ripple"></span>
                     <span class="mdc-list-item__text">Grains</span>
                 </li> -->
@@ -139,9 +139,12 @@
   <script>
     const select = mdc.select.MDCSelect.attachTo(document.querySelector('.mdc-select'));
 
-        select.listen('MDCSelect:change', () => {
-            console.log(`Selected option at index ${select.selectedIndex} with value "${select.value}"`);
-        });
+    select.listen('MDCSelect:change', () => {
+      console.log(`Selected option at index ${select.selectedIndex} with value "${select.value}"`);
+    });
+
+    console.log(select.value);
+    const selectedValue = select.value;
   </script>
 
 
@@ -193,9 +196,9 @@
     const tmp = document.querySelector(".tmp");
 
     const reposParentURL = fetch("https://api.github.com/users/sbrahm6/repos")
-      // .catch(() => {
-      //   fetch(proxyURL + "https://api.github.com/users/sbrahm6/repos")
-      // })
+      .catch(() => {
+        fetch(proxyURL + "https://api.github.com/users/sbrahm6/repos")
+      })
       .then(res => res.json()).then((data) => {
         const length = data.length;
 
